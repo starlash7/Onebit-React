@@ -7,8 +7,8 @@ let f5 = NaN;
 let f6 = "";
 let f7 = 0n;
 
-if(!f4) {
-    console.log("falsy");
+if (!f4) {
+  console.log("falsy");
 }
 
 // 2. Truthy 한 값
@@ -22,11 +22,11 @@ let t5 = () => {};
 // 3. 활용 사례
 
 function printName(person) {
-    if(person === undefined || person === null){
-        console.log("person의 값이 없음");
-        return;
-    }
-    console.log(person.name);
+  if (person === undefined || person === null) {
+    console.log("person의 값이 없음");
+    return;
+  }
+  console.log(person.name);
 }
 
 let person = null;

@@ -1,39 +1,39 @@
+import { useRef, useState } from "react";
 import "./Editor.css";
-import { useState, useRef } from "react";
 
 const Editor = ({ onCreate }) => {
-  const [content, setContet] = useState("");
-  const contentRef = useRef();
+  const [content, setContent] = useState("");
+  const inputRef = useRef();
 
   const onChangeContent = (e) => {
-    setContet(e.target.value);
+    setContent(e.target.value);
   };
 
   const onKeydown = (e) => {
     if (e.keyCode === 13) {
-      onsubmit();
+      onSubmit();
     }
   };
 
-  const onsubmit = () => {
+  const onSubmit = () => {
     if (content === "") {
-      contentRef.current.focus();
+      inputRef.current.focus();
       return;
     }
     onCreate(content);
-    setContet("");
+    setContent("");
   };
 
   return (
     <div className="Editor">
       <input
-        ref={contentRef}
+        ref={inputRef}
         value={content}
-        onKeyDown={onKeydown}
         onChange={onChangeContent}
+        onKeyDown={onKeydown}
         placeholder="새로운 Todo..."
       />
-      <button onClick={onsubmit}>추가</button>
+      <button onClick={onSubmit}>추가</button>
     </div>
   );
 };

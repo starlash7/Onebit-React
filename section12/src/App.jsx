@@ -10,41 +10,47 @@ import Notfound from "./pages/Notfound";
 const mockData = [
   {
     id: 1,
-    createdDate: new Date().getTime(),
+    createdDate: new Date("2024-02-19").getTime(),
     emotionId: 1,
     content: "1번 일기 내용",
   },
   {
     id: 2,
-    createdDate: new Date().getTime(),
+    createdDate: new Date("2024-02-18").getTime(),
     emotionId: 2,
     content: "2번 일기 내용",
+  },
+  {
+    id: 3,
+    createdDate: new Date("2024-01-07").getTime(),
+    emotionId: 3,
+    content: "3번 일기 내용",
   },
 ];
 
 function reducer(state, action) {
   switch (action.type) {
-    case `CREATE`:
+    case "CREATE":
       return [action.data, ...state];
-    case `UPDATE`:
+    case "UPDATE":
       return state.map((item) =>
         String(item.id) === String(action.data.id) ? action.data : item
       );
-    case `DELETE`:
+    case "DELETE":
       return state.filter((item) => String(item.id) !== String(action.id));
     default:
       return state;
   }
 }
 
-const DiaryStateContext = createContext();
-const DiaryDispatchContext = createContext();
+export const DiaryStateContext = createContext();
+export const DiaryDispatchContext = createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
-  //새로운 일기 추가
+  // 새로운 일기 추가
   const onCreate = (createdDate, emotionId, content) => {
     dispatch({
       type: "CREATE",
@@ -57,11 +63,11 @@ function App() {
     });
   };
 
-  //기존 일기 수정
+  // 기존 일기 수정
   const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
-      type: "UPADTE",
-      date: {
+      type: "UPDATE",
+      data: {
         id,
         createdDate,
         emotionId,
@@ -70,10 +76,10 @@ function App() {
     });
   };
 
-  //기존 일기 삭제
+  // 기존 일기 삭제
   const onDelete = (id) => {
     dispatch({
-      type: `DELETE`,
+      type: "DELETE",
       id,
     });
   };
@@ -81,7 +87,13 @@ function App() {
   return (
     <>
       <DiaryStateContext.Provider value={data}>
-        <DiaryDispatchContext.Provider value={(onCreate, onDelete, onUpdate)}>
+        <DiaryDispatchContext.Provider
+          value={{
+            onCreate,
+            onUpdate,
+            onDelete,
+          }}
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/new" element={<New />} />

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { getEmotionImage } from "../util/get-emotion-image";
+import { getEmotionImage } from "../uitl/get-emotion-image";
 import Button from "./Button";
 import "./DiaryItem.css";
 
